@@ -18,7 +18,14 @@ load_dotenv()
 # Configure OpenRouter with your API key securely from the environment
 client =OpenAI(
     base_url="https://openrouter.ai/api/v1",
+    api_key=os.getenv('GEMINI_API_KEY'))
 
+# Configure Supabase with API Key securely from the environment
+
+SUPABASE_URL = os.getenv('SUPABASE_URL')
+SUPABASE_KEY = os.getenv('SUPABASE_KEY')
+
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 def get_ai_response(prompt, companion_name, history):
     time.sleep(2) 
@@ -33,7 +40,7 @@ def get_ai_response(prompt, companion_name, history):
     except Exception:
         # This triggers the "nap" message if the API fails for any reason
         return "Msupa is taking a quick nap to recharge her circuits! 💤 Please wait a minute and try again."
-
+        
 if prompt := st.chat_input("Talk to Msupa..."):
     st.chat_message("user").write(prompt)
     
