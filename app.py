@@ -328,7 +328,6 @@ after just two minutes of conversation. That is your entire purpose.
 # ============================================================
 # SECTION 7: AI RESPONSE FUNCTION (GEMINI ENGINE)
 # ============================================================
-def get_ai_response(user_message, companion_name, memory):
     # Initialize chat history if it doesn't exist yet
     if "chat_history" not in st.session_state:
         system_prompt = build_system_prompt(companion_name, memory)
