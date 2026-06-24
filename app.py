@@ -54,14 +54,7 @@ if prompt := st.chat_input("Talk to Msupa..."):
         st.session_state.memory.append({"role": "assistant", "content": ai_response})
 
 
-    api_key=os.getenv('GEMINI_API_KEY'))
-
-# Configure Supabase with API Key securely from the environment
-
-SUPABASE_URL = os.getenv('SUPABASE_URL')
-SUPABASE_KEY = os.getenv('SUPABASE_KEY')
-
-supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+    
 # ============================================================
 # SECTION 2: COMPANION NAME GENERATOR
 # ============================================================
