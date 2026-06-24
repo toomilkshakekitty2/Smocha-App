@@ -8,6 +8,7 @@ from openai import OpenAI
 from dotenv import load_dotenv
 from supabase import create_client, Client
 
+st.set_page_config(page_title="Smocha ", page_icon="🌯")
 # ============================================================
 # SECTION 1: ENVIRONMENT SETUP
 # ============================================================
@@ -66,7 +67,6 @@ COMPANION_NAMES = [
 
 def get_companion_name():
     if "companion_name" not in st.session_state:
-        st.set_page_config(page_title="Smocha ", page_icon="🌯")
         st.session_state.companion_name = "Msupa"                  
     return st.session_state.companion_name
 
@@ -328,7 +328,8 @@ after just two minutes of conversation. That is your entire purpose.
 # ============================================================
 # SECTION 7: AI RESPONSE FUNCTION (GEMINI ENGINE)
 # ============================================================
-    # Initialize chat history if it doesn't exist yet
+def initialize_chat_history(companion_name, memory):
+# Initialize chat history if it doesn't exist yet
     if "chat_history" not in st.session_state:
         system_prompt = build_system_prompt(companion_name, memory)
         st.session_state.chat_history = [
@@ -448,6 +449,6 @@ if user_input:
 
     # STEP 7: Append back into the display loop
     st.session_state.messages.append({
-        "role": "assistant, companion",
+        "role": "assistant",
         "content": response
     })
