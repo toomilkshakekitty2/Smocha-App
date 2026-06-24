@@ -5,12 +5,21 @@ import random
 import time
 
 def get_ai_response(prompt, companion_name, history):
-    time.sleep(2)  # Pause for 5 seconds to pace your requests
-    response = client.chat.completions.create(
-        model="meta-llama/llama-3.1-70b-instruct:free",
-        messages=history
-    )
-    return response.choices[0].message.content
+    time.sleep(2) 
+    
+    # Wrap the API call in the safety net
+    try:
+        response = client.chat.completions.create(
+            model="meta-llama/llama-3.1-70b-instruct:free",
+            messages=history
+        )
+        return response.choices[0].message.content
+        
+    except Exception as e:
+        # This catches RateLimits and other connection issues
+        # and displays the "nap" message instead of crashing
+        st.warning("Msupa is currently taking a quick nap to recharge her circuits! 💤 Please wait a minute and try again.")
+        st.stop()
 
 import streamlit as st
 from openai import OpenAI
