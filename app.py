@@ -8,7 +8,6 @@ def get_ai_response(prompt, companion_name, history):
     time.sleep(2) 
     
     try:
-        # This is the exact line that is crashing
         response = client.chat.completions.create(
             model="google/gemma-4-31b-it:free",
             messages=history
@@ -16,10 +15,20 @@ def get_ai_response(prompt, companion_name, history):
         return response.choices[0].message.content
         
     except Exception:
-        # By not specifying 'openai.RateLimitError', this will catch 
-        # ANY error (RateLimit, ConnectionError, Timeout, etc.)
-        st.warning("Msupa is taking a quick nap! 💤 She'll be back in a minute.")
-        st.stop()
+        # This triggers the "nap" message if the API fails for any reason
+        return "Msupa is taking a quick nap to recharge her circuits! 💤 Please wait a minute and try again."
+
+if prompt := st.chat_input("Talk to Msupa..."):
+    st.chat_message("user").write(prompt)
+    
+    # Get the response
+    with st.chat_message("assistant"):
+        ai_response = get_ai_response(prompt, companion_name, st.session_state.memory)
+        st.write(ai_response)
+        
+    # Update memory only if it wasn't the nap message
+    if "nap" not in ai_response:
+        st.session_state.memory.append({"role": "assistant", "content": ai_response})
 
 import streamlit as st
 from openai import OpenAI
