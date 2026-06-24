@@ -1,3 +1,18 @@
+import streamlit as st
+from openai import OpenAI
+from dotenv import load_dotenv
+from supabase import create_client, Client
+
+# ============================================================
+# SECTION 1: ENVIRONMENT SETUP
+# ============================================================
+# load_dotenv() reads your .env file where your Gemini API key lives.
+# This keeps your secret key out of your code.
+load_dotenv()
+
+# Configure OpenRouter with your API key securely from the environment
+client =OpenAI(
+    base_url="https://openrouter.ai/api/v1",
 import datetime
 import json
 import os
@@ -30,21 +45,7 @@ if prompt := st.chat_input("Talk to Msupa..."):
     if "nap" not in ai_response:
         st.session_state.memory.append({"role": "assistant", "content": ai_response})
 
-import streamlit as st
-from openai import OpenAI
-from dotenv import load_dotenv
-from supabase import create_client, Client
 
-# ============================================================
-# SECTION 1: ENVIRONMENT SETUP
-# ============================================================
-# load_dotenv() reads your .env file where your Gemini API key lives.
-# This keeps your secret key out of your code.
-load_dotenv()
-
-# Configure OpenRouter with your API key securely from the environment
-client =OpenAI(
-    base_url="https://openrouter.ai/api/v1",
     api_key=os.getenv('GEMINI_API_KEY'))
 
 # Configure Supabase with API Key securely from the environment
