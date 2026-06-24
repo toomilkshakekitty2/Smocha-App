@@ -1,3 +1,8 @@
+import datetime
+import json
+import os
+import random
+import time
 import streamlit as st
 from openai import OpenAI
 from dotenv import load_dotenv
@@ -13,11 +18,7 @@ load_dotenv()
 # Configure OpenRouter with your API key securely from the environment
 client =OpenAI(
     base_url="https://openrouter.ai/api/v1",
-import datetime
-import json
-import os
-import random
-import time
+
 
 def get_ai_response(prompt, companion_name, history):
     time.sleep(2) 
