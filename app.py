@@ -7,18 +7,18 @@ import time
 def get_ai_response(prompt, companion_name, history):
     time.sleep(2) 
     
-    # Wrap the API call in the safety net
     try:
+        # This is the exact line that is crashing
         response = client.chat.completions.create(
-            model="meta-llama/llama-3.1-70b-instruct:free",
+            model="google/gemma-4-31b-it:free",
             messages=history
         )
         return response.choices[0].message.content
         
-    except Exception as e:
-        # This catches RateLimits and other connection issues
-        # and displays the "nap" message instead of crashing
-        st.warning("Msupa is currently taking a quick nap to recharge her circuits! 💤 Please wait a minute and try again.")
+    except Exception:
+        # By not specifying 'openai.RateLimitError', this will catch 
+        # ANY error (RateLimit, ConnectionError, Timeout, etc.)
+        st.warning("Msupa is taking a quick nap! 💤 She'll be back in a minute.")
         st.stop()
 
 import streamlit as st
